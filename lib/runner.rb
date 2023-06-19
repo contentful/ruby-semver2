@@ -24,7 +24,7 @@ module XSemVer
 semver commands
 ---------------
 
-init[ialze]                        # initialize semantic version tracking
+init[ialize] [--force]             # initialize semantic version tracking
 inc[rement] major | minor | patch  # increment a specific version number
 pre[release] [STRING]              # set a pre-release version suffix
 spe[cial] [STRING]                 # set a pre-release version suffix (deprecated)
@@ -40,8 +40,9 @@ PLEASE READ http://semver.org
 
     # Create a new .semver file if the file does not exist.
     command :initialize, :init do
+      force = @args.include?('--force')
       file = SemVer.file_name
-      if File.exist? file
+      if File.exist? file and !force
         puts "#{file} already exists"
       else
         version = SemVer.new
